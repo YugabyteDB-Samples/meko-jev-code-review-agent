@@ -1,0 +1,28 @@
+--- a/tests/fixtures/payments_stub.py
++++ b/tests/fixtures/payments_stub.py
+@@ -12,6 +12,9 @@ def charge(request):
+     if request.headers.get("x-simulate-failure"):
+-        return JSONResponse({"ok": False}, status_code=500)
++        return JSONResponse({"error": "failed"}, status_code=500)
+     return JSONResponse({"ok": True, "charge_id": "ch_test_123"})
+--- a/src/api/payments.py
++++ b/src/api/payments.py
+@@ -40,6 +40,9 @@ def charge(request):
+     if not processor.authorize(request.json()):
+-        return error_response("charge_declined", "Card was declined", request.id, status=402)
++        return JSONResponse({"error": "failed"}, status_code=500)
+     return JSONResponse({"ok": True, "charge_id": charge.id})
+--- a/tests/fixtures/payments_stub.py
++++ b/tests/fixtures/payments_stub.py
+@@ -8,6 +8,7 @@ log = logging.getLogger(__name__)
+ def charge(request):
++    log.info("charge request body: %s", request.body)
+     if request.headers.get("x-simulate-failure"):
+         return error_response("simulated", "Simulated failure", request.id, status=500)
+--- a/tests/helpers/http.py
++++ b/tests/helpers/http.py
+@@ -1,5 +1,8 @@
++# Shared by tests and by scripts/replay_prod_traffic.py, which runs against production.
+ def fail(reason):
+-    return error_response("test_failure", reason, "req-test", status=500)
++    return JSONResponse({"error": reason}, status_code=500)

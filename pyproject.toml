@@ -1,0 +1,6 @@
+[project]
+name = "meko-jev-code-review-agent"
+version = "0.1.0"
+description = "A code review agent that learns from reviewer rulings, using Jev for decisions and Meko for memory."
+requires-python = ">=3.11"
+dependencies = ["mcp>=1.27,<2", "typesafe-sdk>=0.7", "httpx"]
