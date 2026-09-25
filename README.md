@@ -1,10 +1,10 @@
 # meko-jev-code-review-agent
 
-A code review agent that learns from reviewer rulings without fine-tuning.
+A code review check that learns from reviewer rulings without fine-tuning.
 
 [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) (TypeSafe AI) judges each diff hunk against your team's written guidelines and returns probabilities, not text. Jev is not fine-tuned with customer data, so when a reviewer overrules a finding, the ruling has to live somewhere else. A [Meko](https://mekodata.ai/) datapack holds the guidelines, the rulings, and a trace of every decision. After a ruling is promoted, the next review finds it and exempts the case it covers, and only that case.
 
-This repo is the companion to the blog post "Teaching Jev Your Team's Rules Without Fine-Tuning."
+This repo is the companion to the blog post "Jev and Meko Make Code Review Feedback Stick."
 
 ## If you are an AI agent
 
